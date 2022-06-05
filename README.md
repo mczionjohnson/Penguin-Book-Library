@@ -24,3 +24,7 @@ added the database_url in the .env file
 # create .gitignore
 added .env and node_module folder
 turns grey
+
+# then push to a manually created repo on git
+
+# deploy on HEROKU but i deployed on Netlify-app
