@@ -16,6 +16,8 @@ router.get('/', async (req, res) => {
             authors: authors,
             searchOptions: req.query
         })
+        // creating var/locals to be fetched by the views
+        // creating a loop and result can be used in the views
     } catch {
         res.redirect('/')
     }
@@ -23,7 +25,9 @@ router.get('/', async (req, res) => {
 
 // New authors route
 router.get('/new', (req, res) => {
-    res.render('authors/new', { author: new Author() })
+    res.render('authors/new', {
+         author: new Author() 
+        })
 })
 
 // Create new author

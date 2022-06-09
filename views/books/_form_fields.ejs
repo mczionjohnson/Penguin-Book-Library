@@ -1,0 +1,42 @@
+<div>
+    <label>Title</label>
+    <input type="text" name="title" value="<%= book.title %>">
+</div>
+<!-- getting body.name and inputing it into the author Schema of Db through the route -->
+<div>
+    <label>Author</label>
+    <select name="author">
+        <% authors.forEach(author => { %>
+            <% if (author.id === book.author) { %>
+                <option selected label="<%= author.name %>" value="<%= author.id %>">
+            <% } else { %>
+                <option label="<%= author.name %>" value="<%= author.id %>">
+            <% } %>
+        <% }) %>
+    </select>
+<!-- book author comes from the related row 1N1 of author in book table -->
+<!-- the related row is type: ObjectId already -->
+<!-- this row populates data from author's table as options -->
+</div>
+<div>
+    <label>Publish Date</label>
+    <input type="date" name="publishDate" 
+        value="<%= book.publishDate == null ? '' : book.publishDate.toISOString().split('T')[0]%>">
+        <!-- converts date to string -->
+</div>
+<div>
+    <label>Page Count</label>
+    <input type="number" name="pageCount" min='1' value="<%= book.pageCount %>">
+    <!-- setting a minimum value of 1 for page count -->
+</div>
+<div>
+    <label>Cover</label>
+    <input type="file" name="cover">
+    <!-- file import does not allow setting of value -->
+</div>
+<div>
+    <label>Description</label>
+    <textarea name="description">
+        <%= book.description %>
+    </textarea>
+</div>

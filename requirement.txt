@@ -9,3 +9,5 @@ npm i mongoose
 npm i --save-dev dotenv
 
 npm i body-parser
+
+npm i multer
