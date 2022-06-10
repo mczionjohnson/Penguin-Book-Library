@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const path = require('path')
 
-const coverImageBasePath = 'uploads/bookCovers'
+// const coverImageBasePath = 'uploads/bookCovers'
 // multer will create this in the public folder automatically for us
 
 const bookSchema = new mongoose.Schema ({
@@ -25,7 +25,11 @@ const bookSchema = new mongoose.Schema ({
         required: true,
         default: Date.now
     },
-    coverImageName: {
+    coverImage: {
+        type: Buffer,
+        required: true
+    },
+    coverImageType: {
         type: String,
         required: true
     },
@@ -39,15 +43,22 @@ const bookSchema = new mongoose.Schema ({
 // the ref states the table
 
 // a virtual object since we have a string here and we want to get the actual cover 
-// in the public file and render to the client
+// in the public file and render to the client/views
 bookSchema.virtual('coverImagePath').get(function() {
-    if (this.coverImageName != null) {
-        return path.join('/', coverImageBasePath, this.coverImageName)
-        // the index path, the folders and the name of this file
+    if (this.coverImage != null && this.coverImageType != null) {
+        return `data:${this.coverImageType};charset=utf-8;base64,${this.coverImage.toString('base64')}`
+        // returning a HTML data object using backticks ``
     }
 })
+
+// bookSchema.virtual('coverImagePath').get(function() {
+//     if (this.coverImageName != null) {
+//         return path.join('/', coverImageBasePath, this.coverImageName)
+//         // the index path, the folders and the name of this file
+//     }
+// })
 
 module.exports = mongoose.model ('Book', bookSchema)
 
 // exporting the path as a var and not as a default
-module.exports.coverImageBasePath = coverImageBasePath
+// module.exports.coverImageBasePath = coverImageBasePath

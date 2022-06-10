@@ -176,3 +176,47 @@ then returns only the first 10
 # gitignore the public/uploads 
 we are not only using it for development
 this folder with be generated on the hosting side (e.g. heroku) during production
+
+### git push
+
+### file pond to upload images to our database
+file preview
+file resize
+file encode
+
+# no more use of multipart form 
+since we are using filepond to encode, there is no more use of enctype="multipart/form-data" class in view
+no more upload.single('cover') in route POST request
+filePond will send JSON Objects as data
+'data' is in 64-bits
+
+# update the model 
+edit coverImageName to coverImage {type: Buffer}
+added coverImageType for {png,gif,jpeg}
+update the virtual object for views to use
+removed const coverImageBasePath and require ('path') 
+
+# updating Controller
+function removeBookCover(fileName){} removed since we are not dealing with files
+removed fs and path global var
+
+# create a saveCover function for JSON object from filepond
+parsed the JSON object from view
+checked the image type then grab the cover as data
+covert to buffer as buffer.from() specifying the bit = 'base64'
+then save to book.coverImage row in book model
+also grab the type of image and save to model
+
+# removed in POST request of controller
+const uploadPath
+const fileName = req.file != null ? req.file.filename : null
+coverImageName: fileName,
+
+# issues with Buffer object in Db from conversion in route
+this cannot be displayed to client
+so we use virtualObject() in model to grab coverImage and coverImageType
+then convert the Buffer back to string which is base64
+we then use it to reference the image and display in HTMl data object using backticks ``
+
+# update .gitignore
+you can delete the public/uploads and remove it in the .gitignore too
