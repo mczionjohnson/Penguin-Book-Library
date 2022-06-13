@@ -1,8 +1,8 @@
 const express= require('express')
 // const multer = require('multer')
 const router = express.Router()
-const path = require('path')
-const fs = require('fs')
+// const path = require('path')
+// const fs = require('fs')
 
 // import the Author and Book Tables and allow it as an object
 const Author = require('../models/authors')

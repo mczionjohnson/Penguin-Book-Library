@@ -167,6 +167,7 @@ const books = await query.exec()
 - correct
 let query
 const books = await query.exec()
+# const var has to be initialised but let can be declared and initialised later
 
 # sorting
 books = Book.find().sort({ createdAt : 'desc'}).limit(10)
@@ -220,3 +221,42 @@ we then use it to reference the image and display in HTMl data object using back
 
 # update .gitignore
 you can delete the public/uploads and remove it in the .gitignore too
+
+### git push
+
+# get and post from the browser
+delete and put request needs a library
+
+# using form to send a post request and change to ?_method=DELETE
+in the author index page
+
+# seperating delete form as a partial so we can re-use it
+to use a partial <%- include('', `${also pass any params}` ) %>
+use string interpolation, backticks and javascript object in the view side
+
+# method override
+?_method=
+
+# create edit 
+edit page, view page and delete page linked it from homepage
+
+# string interpolation uses backticks
+res.redirect(`authors/${author.id}`)
+- alternative to string concatenation 
+console.log("Let's meet at the "+foo)
+
+# set up constrain on deleting an author with a book
+because the book table is related to Author table
+if you remove author with a book, then there will be books without authors in the Db
+- await author.remove()
+.pre allows this code to run before removal of author is done
+- next is a callback to the function(next)
+- find the author by id and remove it or callbacks with next
+when there is no author id or the author has book(s) registered
+
+# debugging
+catch (err) {
+        console.log(err)
+        res.redirect('/')
+    }
+- err variable to be display in the console

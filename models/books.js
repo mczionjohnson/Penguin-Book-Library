@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const path = require('path')
+// const path = require('path')
 
 // const coverImageBasePath = 'uploads/bookCovers'
 // multer will create this in the public folder automatically for us

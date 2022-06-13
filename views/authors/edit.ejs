@@ -1,0 +1,8 @@
+<h2>Edit Author</h2>
+<form action="/authors/<%= author.id %>?_method=PUT" method="POST">
+    <%- include('_form_fields') %>
+    <!-- import the form partials -->
+    <a href="/authors/<%= author.id %>">Cancel</a>
+    <button type="submit">Update</button>
+</form>
+<!-- author array is made available by the route -->

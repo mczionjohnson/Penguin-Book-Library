@@ -10,4 +10,9 @@ npm i --save-dev dotenv
 
 npm i body-parser
 
+Either:
 npm i multer
+or
+file pond cdn js and css was copied into the layouts
+
+npm i method-override
