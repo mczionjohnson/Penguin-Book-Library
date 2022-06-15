@@ -16,7 +16,9 @@
 </form>
 <div>
     <% books.forEach(book => { %>
-        <img height="150" width="100" src="<%= book.coverImagePath %>">
+        <a href="/books/<%= book.id %>">
+            <img height="150" width="100" src="<%= book.coverImagePath %>">
+        </a>
         <!--book.coverImagePath is a virtual path from the model  -->
     <% }) %>
 </div>

@@ -69,18 +69,81 @@ router.post('/', async (req, res) => {
     })
     // converts the publishDate back to date before inserting in the Db
 
-    saveCover(book, req.body.cover)
-    // grabbing the cover data in views by the name on the input
-    // coverImage: and coverImageType: already saved by the saveCover function
-
-    try{
+    try {
+        saveCover(book, req.body.cover)
+        // grabbing the cover data in views by the name on the input
+        // coverImage: and coverImageType: already saved by the saveCover function
         const newBook = await book.save()
-        // res.redirect('authors/${newBook.id}')
-        res.redirect('books')
+        res.redirect(`books/${newBook.id}`)
+        // res.redirect('books')
     } catch {
         // if (book.coverImageName != null) {
         //     removeBookCover(book.coverImageName)
         renderNewPage(res, book, true)
+    }
+})
+
+// Show Book Route
+router.get('/:id', async (req, res) => {
+    try {
+        const book = await Book.findById(req.params.id).populate('author').exec()
+        res.render('books/show', { book: book })
+    } catch {
+        res.redirect('/')
+    }
+})
+
+// Edit Book Route
+router.get('/:id/edit', async (req, res) => {
+    const book = await Book.findById(req.params.id)
+    try {
+        renderEditPage(res, book)
+    } catch {
+        res.redirect('/')
+    }
+})
+
+// Update book
+router.put('/:id', async (req, res) => {
+    let book
+    try{
+        book = await Book.findById(req.params.id)
+        book.title =  req.body.title
+        book.author =  req.body.author
+        book.publishDate =  new Date(req.body.publishDate)
+        // converts it back to date string
+        book.pageCount =  req.body.pageCount
+        book.description =  req.body.description
+        if (req.params.cover != null && req.params.cover != ''){
+            saveCover(book, req.body.cover)
+        }
+        await book.save()
+        res.redirect(`/books/${book.id}`)
+    } catch {
+        if (book != null) {
+            renderEditPage(res, book, true)
+        } else {
+            redirect('/')
+        }
+    }
+})
+
+// Delete Route
+router.delete('/:id', async (req, res) => {
+    let book
+    try {
+        book = await Book.findById(req.params.id)
+        await book.remove()
+        res.redirect('/books')
+    } catch {
+        if (book != null) {
+            res.render('books/show', {
+                book: book,
+                errorMessage: 'Could not remove book'
+            })
+        } else {
+            res.redirect('/')
+        }
     }
 })
 
@@ -93,22 +156,38 @@ router.post('/', async (req, res) => {
 
 // creating a dynamic function to be used by multiple router
 async function renderNewPage(res, book, hasError = false) {
+    renderFormPage(res, book, 'new', hasError)
+}
+// authors, book and errorMessage are var made available locally
+
+async function renderEditPage(res, book, hasError = false) {
+    renderFormPage(res, book, 'edit', hasError)
+}
+
+// dynamic function
+async function renderFormPage(res, book, form, hasError = false) {
     try {
         const authors = await Author.find({})
         const params = {
             authors: authors,
             book: book
         }
-        if (hasError) params.errorMessage = 'Error Creating Book'
-        res.render('books/new', params)
+        if (hasError) {
+            if (form == 'edit') {
+                params.errorMessage = 'Error Updating book'
+            } else {
+                params.errorMessage = 'Error Creating Book'
+            }
+        }
+        res.render(`books/${form}`, params)
     } catch {
         res.redirect('/books')
     }
 }
-// authors, book and errorMessage are var made available locally
+
 
 function saveCover(book, coverEncoded) {
-    if (coverEncoded == null) return
+    if (coverEncoded === null) return
     const cover = JSON.parse(coverEncoded)
     if (cover != null && imageMimeTypes.includes(cover.type)) {
         book.coverImage = new Buffer.from(cover.data, 'base64')

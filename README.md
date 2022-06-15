@@ -260,3 +260,26 @@ catch (err) {
         res.redirect('/')
     }
 - err variable to be display in the console
+
+### git push
+
+# show edit delete pages for Books
+populate author in book show route for access to author table elements in the show page
+link the images to the show page
+
+# creating a re-usable function
+async function renderFormPage(res, book, form, hasError = false) {
+    try {
+        const authors = await Author.find({})
+        const params = {
+            authors: authors,
+            book: book
+        }
+        if (hasError) params.errorMessage = 'Error Creating Book'
+        res.render(`books/${form}`, params)
+    } catch {
+        res.redirect('/books')
+    }
+}
+
+- form can be 'edit' or 'new' according to the route
