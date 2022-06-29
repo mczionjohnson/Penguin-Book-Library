@@ -18,15 +18,21 @@
     <script defer src="https://unpkg.com/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.js"></script>
     <script defer src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
     <script defer src="/javascripts/fileUpload.js"></script>
+    <!-- <script defer src="/javascripts/disableButtons.js"></script> -->
+    <link rel="stylesheet" href="/stylesheets/main.css">
     <title>Library</title>
 </head>
 <body>
+    <div class="container">
     <!-- go up a leavel to views/partials then use the header file -->
     <%- include('../partials/header.ejs') %>
-    <%- include('../partials/errorMessage.ejs') %>
-    <!-- include the original body from views folder of route  -->
-    <!-- errorMessage was a var created in the router and made available locally -->
-    <%- body %>
+        <div class="inner-container">
+            <%- include('../partials/errorMessage.ejs') %>
+            <!-- include the original body from views folder of route  -->
+            <!-- errorMessage was a var created in the router and made available locally -->
+            <%- body %>
+        </div>
+    </div>
     
     
     

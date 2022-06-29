@@ -16,3 +16,13 @@ or
 file pond cdn js and css was copied into the layouts
 
 npm i method-override
+
+
+bcryptjs
+cors
+jsonwebtoken 
+passport 
+passport-jwt 
+
+
+validator
