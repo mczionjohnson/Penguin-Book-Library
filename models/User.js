@@ -24,7 +24,7 @@ const UserSchema = new Schema({
     password: {
         type: String,
         required: [true, "provide a password"],
-        minlength: [6, 'minimum of 6 characters']
+        minlength: [8, 'minimum of 8 characters']
     }
 
 }, {timestamps: true }

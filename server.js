@@ -2,14 +2,20 @@
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config()
 }
+var cookieParser = require('cookie-parser')
 
 const cors = require("cors");
 const express = require('express')
-const app = express()
-// const passport = require("passport")
 const expressLayouts = require('express-ejs-layouts')
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
+
+const app = express()
+// const passport = require("passport")
+
+// parse cookies
+// we need this because "cookie" is true in csrfProtection
+app.use(cookieParser())
 
 const indexRouter = require('./routes/index')
 const authorRouter = require('./routes/authors')
@@ -18,6 +24,7 @@ const bookRouter = require('./routes/books')
 app.set('view engine', 'ejs' )
 app.set('views', __dirname + '/views' )
 app.set('layout', 'layouts/layout')
+
 
 app.use(cors());
 app.use(expressLayouts)
@@ -29,7 +36,6 @@ app.use(bodyParser.urlencoded({ limit: '10mb', extended: true}))
 // extended: true to allow json object and strings
 
 // app.use(passport.initialize())
-
 // require('./middlewares/passport')(passport)
 
 // connecting to mongodb

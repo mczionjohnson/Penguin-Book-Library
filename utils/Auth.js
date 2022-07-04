@@ -88,6 +88,7 @@ const userLogin = async (userCreds, role, res) => {
         //     success: false
         return res.status(404).render('auth-test-user/login', {
             user: user,
+            csrfToken: csrfToken, 
             errorMessage: "Username is not found. Invalid Login credentials."
         });
     }
@@ -99,6 +100,7 @@ const userLogin = async (userCreds, role, res) => {
         // });
         return res.status(404).render('auth-test-user/login', {
             user: user,
+            csrfToken: csrfToken, 
             errorMessage: "Please make sure you are loggin in from the right portal."
         });
     }
@@ -138,6 +140,7 @@ const userLogin = async (userCreds, role, res) => {
         // });
         return res.status(404).render('auth-test-user/login', {
             user: user,
+            csrfToken: csrfToken, 
             errorMessage: "Incorrect password."
         });
     }} catch {
