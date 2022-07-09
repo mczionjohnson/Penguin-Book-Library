@@ -1,5 +1,7 @@
 const jwt = require("jsonwebtoken");
-const { SECRETADMIN } = require("../config/indexAdmin");
+// const { SECRETADMIN } = require("../config/indexAdmin");
+const SECRETADMIN = process.env.APP_SECRETADMIN
+
 
 
 const requireAuthAdmin = (req, res, next) => {

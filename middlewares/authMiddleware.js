@@ -6,7 +6,7 @@ const User = require("../models/User")
 const SECRET = process.env.APP_SECRET
 
 // const { SECRETADMIN } = require("../config/indexAdmin");
-const SECRETADMIN = process.env.APP_ADMINSECRET
+const SECRETADMIN = process.env.APP_SECRETADMIN
 
 
 
