@@ -17,9 +17,7 @@ const app = express()
 // we need this because "cookie" is true in csrfProtection
 app.use(cookieParser())
 
-const indexRouter = require('./routes/index')
-const authorRouter = require('./routes/authors')
-const bookRouter = require('./routes/books')
+
 
 app.set('view engine', 'ejs' )
 app.set('views', __dirname + '/views' )
@@ -51,13 +49,18 @@ db.on('error', error => console.error(error))
 db.once('open', () => console.log('Connected to Mongoose'))
 
 // using routers
-app.use('/', indexRouter)
-app.use('/authors', authorRouter)
-app.use('/books', bookRouter)
+// const indexRouter = require('./routes/index')
+// const authorRouter = require('./routes/authors')
+// const bookRouter = require('./routes/books')
+app.use('/', require('./routes/first'))
+
+app.use('/index', require('./routes/index'))
+app.use('/authors', require('./routes/authors'))
+app.use('/books', require('./routes/books'))
 
 // test
 app.use('/api/users', require('./routes/users'))
 app.use('/api/admin', require('./routes/admin'))
-app.use('/api/superadmin', require('./routes/superadmin'))
+// app.use('/api/superadmin', require('./routes/superadmin'))
 
 app.listen(process.env.PORT || 3000)

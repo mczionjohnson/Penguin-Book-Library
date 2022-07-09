@@ -1,4 +1,4 @@
-<%- include('../partials/header3.ejs') %>
+<%- include('../partials/header2.ejs') %>
 
 <h2 class="page-header"><%= book.title %></h2>
 <img width="100" height="150" src="<%= book.coverImagePath %>">
@@ -8,6 +8,5 @@
 <div>Page Count: <%= book.pageCount %></div>
 <div>Description: <%= book.description %></div>
 
-<a href="/books/<%= book.id %>/edit">Edit</a>
-<%- include('../partials/deleteForm', { url: `/books/${book.id}` }) %>
-<a href="/authors/<%= book.author.id %>">View Author</a>
+
+<a href="/authors/user/<%= book.author.id %>">View Author</a>

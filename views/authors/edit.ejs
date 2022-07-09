@@ -1,3 +1,5 @@
+<%- include('../partials/header3.ejs') %>
+
 <h2 class="page-header">Edit Author</h2>
 <form action="/authors/<%= author.id %>?_method=PUT" method="POST">
     <%- include('_form_fields') %>

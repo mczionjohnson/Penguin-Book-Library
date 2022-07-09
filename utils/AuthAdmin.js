@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 
 const User = require("../models/User")
 
-const { SECRET } = require("../config/index");
+const { SECRETADMIN } = require("../config/indexAdmin");
 
 
 /*
@@ -12,74 +12,87 @@ const { SECRET } = require("../config/index");
 * userDets is from the req.body
 */
 
-const userRegister = async (userDets, role, res) => {
+const adminRegister = async (adminDets, role, res) => {
     try {
-        let usernameNotTaken = await (validateUsername(userDets.username));
-        if (!usernameNotTaken) {
-            return res.status(400).render ('auth-test-user/new', {
-                user: user,
-                // populating data back for the get request
-                errorMessage: `Username is already taken.`
-            })
-            // return res.status(400).send({
-            //     message: `Username is already taken.`,
-            //     success: false
-            // })
-        }
+        let checkSecret = 'zxcvbnm987654321!@#'
+        // create a secret in text and use strict-type comparison check with client input
 
-        let emailNotRegistered = await (validateEmail(userDets.email));
-        if (!emailNotRegistered) {
-            return res.status(400).render ('auth-test-user/new', {
-                // populating data back for the get request
-                user: user,
-                csrfToken: csrfToken, 
-                errorMessage: `Email is already registered.`
-            })
-            // return res.status(400).send({
-            //     message: `Email is already registered.`,
-            //     success: false
-            // })
-        }
-
-        // hash the password with 12 salt rounds
-        if(userDets.password.length < 8) {
-            // res.status(400);
-            // throw new Error('Password must be at least 8 characters long');
-            return res.status(400).render ('auth-test-user/new', {
-                // populating data back for the get request
-                user: user,
-                csrfToken: csrfToken, 
-                errorMessage: `Password must be at least 8 characters long.`
-            })
+        if (adminDets.secret === checkSecret) {
+            let usernameNotTaken = await (validateUsername(adminDets.username));
+            if (!usernameNotTaken) {
+                return res.status(400).render ('auth-test-admin/new', {
+                    user: user,
+                    // populating data back for the get request
+                    errorMessage: `Username is already taken.`
+                })
+                // return res.status(400).send({
+                //     message: `Username is already taken.`,
+                //     success: false
+                // })
             }
 
-        const password = await bcrypt.hash(userDets.password, 12);
+            let emailNotRegistered = await (validateEmail(adminDets.email));
+            if (!emailNotRegistered) {
+                return res.status(400).render('auth-test-admin/new', {
+                    // populating data back for the get request
+                    user: user,
+                    csrfToken: csrfToken, 
+                    errorMessage: `Email is already registered.`
+                })
+                // return res.status(400).send({
+                //     message: `Email is already registered.`,
+                //     success: false
+                // })
+            }
 
-        const newUser = new User({
-            ...userDets,
-            password,
-            role
-        });
-        // using spread function ...userDets to store values
-        await newUser.save();
+            // hash the password with 12 salt rounds
+            if(adminDets.password.length < 8) {
+                // res.status(400);
+                // throw new Error('Password must be at least 8 characters long');
+                return res.status(400).render ('auth-test-admin/new', {
+                    // populating data back for the get request
+                    user: user,
+                    csrfToken: csrfToken, 
+                    errorMessage: `Password must be at least 8 characters long.`
+                })
+                }
 
-        // return res.status(201).send({
-        //     message: "Hurray! now you are successfully registered, Please Log in",
-        //     success: true
-        // })
+            const password = await bcrypt.hash(adminDets.password, 12);
 
-        // res.send(`${userDets.name} is now a ${role}`)
-        return res.render('auth-test-user/login', {
-            // populating data back for the get request
-            user: user,
-            csrfToken: csrfToken, 
-            errorMessage: `Welcome, You can now log in`
-        })
+            const newUser = new User({
+                ...adminDets,
+                password,
+                role
+            });
+            // using spread function ...userDets to store values
+            await newUser.save();
 
-    } catch {
+            // return res.status(201).send({
+            //     message: "Hurray! now you are successfully registered, Please Log in",
+            //     success: true
+            // })
+
+            // res.send(`${userDets.name} is now a ${role}`)
+            return res.render('auth-test-admin/login', {
+                // populating data back for the get request
+                user: user,
+                csrfToken: csrfToken, 
+                errorMessage: `Welcome, You can now log in`
+            })
+        } else {
+            res.render('auth-test-admin/new', {
+                // populating data back for the get request
+                user: user,
+                csrfToken: csrfToken, 
+                errorMessage: `Unauthorised`
+            })
+        }
+    } catch (err) {
         // res.redirect('/')
         // console.log(err.message, err.code)
-        res.render('auth-test-user/new', {
+        console.log(err)
+
+        res.render('auth-test-admin/new', {
             // populating data back for the get request
             user: user,
             csrfToken: csrfToken, 
@@ -88,44 +101,43 @@ const userRegister = async (userDets, role, res) => {
     }
 };
 
-const userLogin = async (userCreds, role, res) => {
+const adminLogin = async (adminCreds, role, res) => {
     try {
-    let { username, password } = userCreds;
-    const userInput = await User.findOne({ username });
+    let { username, password } = adminCreds;
+    const adminInput = await User.findOne({ username });
     // check username
-    if (!userInput) {
+    if (!adminInput) {
         // res.status(404).json({
         //     message: "Username is not found. Invalid Login credentials.",
         //     success: false
-        return res.status(404).render('auth-test-user/login', {
+        return res.status(404).render('auth-test-admin/login', {
             user: user,
             csrfToken: csrfToken, 
             errorMessage: "Username is not found. Invalid Login credentials."
         });
     }
     // check role
-    if (userInput.role != role) {
+    if (adminInput.role != role) {
         // return res.status(403).json({
         //     message: "Please make sure you are loggin in from the right portal.",
         //     success: false
         // });
-        return res.status(404).render('auth-test-user/login', {
+        return res.status(404).render('auth-test-admin/login', {
             user: user,
             csrfToken: csrfToken, 
             errorMessage: "Please make sure you are loggin in from the right portal."
         });
     }
     // compare password
-    let isMatch = await bcrypt.compare(password, userInput.password);
+    let isMatch = await bcrypt.compare(password, adminInput.password);
 
     if (isMatch) {
-    const tokenAge = 3 * 24 * 60 * 60;
+        const tokenAge = 3 * 24 * 60 * 60;
         // tokenAge in seconds 3d 24h 60min 60sec
 
         // a function to create token for user
         // returns a token with signature with payload and automatic headers
-        
-        const setToken = await token(userInput._id, userInput.role, userInput.username, userInput.email)
+        const setToken = await token(adminInput._id, adminInput.role, adminInput.username, adminInput.password)
         res.cookie('jwt', setToken, { httpOnly: true, maxAge: tokenAge * 1000 });
 
         // let token = () => { 
@@ -162,14 +174,14 @@ const userLogin = async (userCreds, role, res) => {
         //     // user_id: userInput._id,
         //     setToken
         // });
-        return res.redirect('/index/byuser')
+        return res.redirect('/index');
 
     } else {
         // return res.status(403).json({
         //     message: "Incorrect password.",
         //     success: false
         // });
-        return res.status(404).render('auth-test-user/login', {
+        return res.status(404).render('auth-test-admin/login', {
             user: user,
             csrfToken: csrfToken, 
             errorMessage: "Incorrect password."
@@ -186,10 +198,6 @@ const userLogin = async (userCreds, role, res) => {
 }
 
 
-// const userAuth = passport.authenticate('jwt', { session: false })
-
-
-
 // a function to create token for user
 // returns a token with signature with payload and automatic headers
 let token = async (user_id, role, username, email) => { 
@@ -201,7 +209,7 @@ let token = async (user_id, role, username, email) => {
     username,
     email
     },
-    SECRET, { expiresIn: tokenAge }
+    SECRETADMIN, { expiresIn: tokenAge }
     // SECRET, { expiresIn: "7 days" } jwt[options]
     // token will expire in seven days
     // wrapped a secret into the token
@@ -228,7 +236,6 @@ const validateEmail = async email => {
 };
 
 module.exports = {
-    // userAuth,
-    userLogin,
-    userRegister
+    adminLogin,
+    adminRegister
 }

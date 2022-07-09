@@ -1,7 +1,9 @@
+<%- include('../partials/header.ejs') %>
+
 <h2 class="page-header">New Admin</h2>
-<form action="/api/admin" method="POST">
+<form action="/api/admin/signup" method="POST">
     <%- include('_form_fields') %>
     
-    <a href="/api/admin">Cancel</a>
+    <a href="/">Cancel</a>
     <button type="submit">Create</button>
 </form>

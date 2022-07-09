@@ -3,3 +3,7 @@ node_modules
 public/uploads
 follow.txt
 LESSONS.md
+middlewares/passport.js
+
+routes/superadmin.js
+views/auth-test-superadmin

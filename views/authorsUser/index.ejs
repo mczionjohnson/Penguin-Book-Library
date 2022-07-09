@@ -1,7 +1,7 @@
-<%- include('../partials/header3.ejs') %>
+<%- include('../partials/header2.ejs') %>
 
 <h2 class="page-header">Search Author</h2>
-<form action="/authors" method="GET">
+<form action="/authors/byuser" method="GET">
     <label>Name</label>
     <input type="text" name="name" value="<%= searchOptions.name %>">
     <button type="submit">Search</button>
@@ -9,9 +9,8 @@
 <br>
 <% authors.forEach(author => { %>
     <div><%= author.name %></div>
-    <a href="/authors/<%= author.id %>">View</a>
-    <a href="/authors/<%= author.id %>/edit">Edit</a>
-    <%- include('../partials/deleteForm', { url: `/authors/${author.id}` }) %>
+    <a href="/authors/user/<%= author.id %>">View</a>
+
 <% }) %>
 <!-- to run this code on the server -->
 <!-- fetch all element from authors table -->

@@ -1,81 +1,62 @@
-const router = require("express").Router();
+var csrf = require('csurf')
+const bodyParser = require('body-parser')
 
-const { userRegister } = require('../utils/Auth');
+const router = require("express").Router();
+const User = require("../models/User")
+
+// setup route middlewares
+var csrfProtection = csrf({ cookie: { maxAge: 3000, httpOnly: true, secure: true, proxy: true}})
+var parseForm = bodyParser.urlencoded({ extended: false })
+
+const { adminRegister, adminLogin } = require('../utils/AuthAdmin');
+
+
+// form
+router.get('/signup', csrfProtection, async (req, res) => {
+    res.render('auth-test-admin/new', {
+        // for populating data at catch
+        user: new User(),
+        csrfToken: req.csrfToken()
+    })
+})
 
 // registration
-
-router.get('/', async (req, res) => {
-
-    res.send('Welcome to the Admin page')
-})
-
-router.get('/register-admin', async (req, res) => {
-
-    res.render('auth-test-admin/new')
-})
-
-router.post('/', async (req, res) => {
-    await userRegister(req.body, "admin", res);
+router.post('/signup', parseForm, csrfProtection, async (req, res) => {
+    // for populating data at catch
+    user = new User({
+    username: req.body.username,
+    name: req.body.name,
+    email: req.body.email
+    });
+    csrfToken = req.csrfToken();
+    await adminRegister(req.body, "admin", res);
 })
 
 
-// // Login
-// router.get("/login-user", async (req, res) => {
-//     try {
 
-//     } catch {
+// form
+router.get('/login', csrfProtection, async (req, res) => {
+    res.render('auth-test-admin/login', {
+        // for populating data at catch
+        user: new User(),
+        csrfToken: req.csrfToken()
+    })
+})
 
-//     }
-// });
-// router.get("/login-admin", async (req, res) => {
-//     try {
+// Login
+router.post("/login", parseForm, csrfProtection, async (req, res) => {
+    // for populating data at catch
+    user = new User({
+        username: req.body.username,
+        });
+    csrfToken = req.csrfToken();
+    await adminLogin(req.body, "admin", res);
+});
 
-//     } catch {
-
-//     }
-// });
-// router.get("/login-super-admin", async (req, res) => {
-//     try {
-
-//     } catch {
-
-//     }
-// });
-
-
-// // Authetication Protected
-
-// router.get('/profile', async (req, res) => {
-
-// }
-// )
-// router.get('/user-protected', async (req, res) => {
-//     try {
-
-//     } catch {
-
-//     }
-// });
-
-// router.get('/admin-protected', async (req, res) => {
-//     try {
-
-//     } catch {
-
-//     }
-//     });
-
-// router.get('/super-admin-protected', async (req, res) => {
-//     try {
-
-//     } catch {
-
-//     }
-// });
-
-
-
-
-
+router.get('/logout', async (req, res) => {
+    await res.cookie('jwt', '', { maxAge: 1 });
+    res.redirect('/')
+})
+   
 
 module.exports = router;
