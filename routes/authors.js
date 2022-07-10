@@ -2,7 +2,7 @@ const express= require('express')
 const router = express.Router()
 
 // for users and admin view
-const { requireAuth } = require('../middlewares/authMiddleware');
+const { requireAuth, checkUser } = require('../middlewares/authMiddleware');
 
 // for admin features only
 const { requireAuthAdmin } = require('../middlewares/authMiddleware2');
@@ -11,6 +11,10 @@ const { requireAuthAdmin } = require('../middlewares/authMiddleware2');
 // import the Author Table and allow it as an object
 const Author = require('../models/authors')
 const Book = require('../models/books')
+
+// user this middleware for all get requests
+router.get('*', checkUser)
+
 
 // All authors
 router.get('/', requireAuthAdmin, async (req, res) => {

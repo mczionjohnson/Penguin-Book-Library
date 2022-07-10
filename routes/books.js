@@ -25,7 +25,7 @@ const imageMimeTypes = ['image/jpeg', 'image/png', 'image/gif']
 //     }
 // })
 
-
+// user this middleware for all get requests
 router.get('*', checkUser)
 
 // All Books
