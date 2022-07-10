@@ -3,7 +3,7 @@
         <a class="header-title" href="/index">Penguin Library</a>
         <ul>
             <!-- populated 'logged' and made it available by res.locals in middleware -->
-            <li>Welcome, <%= logged.role %> : <%= logged.email %> </li>
+            <li>Welcome, <%= logged.role %> (<%= logged.email %>)</li>
             
             <li><a href="/authors">Authors</a></li>
             <li><a href="/authors/new">Add Author</a></li>
