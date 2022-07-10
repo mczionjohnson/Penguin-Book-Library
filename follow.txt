@@ -1,0 +1,44 @@
+created the package.json, server.js
+
+app.use
+connect app to routes
+connect app to database
+connect app to static public folder for views
+
+created views/layout and connected to index.js, partial/header
+
+created index route
+connected to home, new and post routes (author) and copied for books
+
+created errorMessage as partials to be used like partial/header
+
+created author model and copied for books
+created author ref link inside book model
+
+used the public folder, path, multer for saving cover images
+use .gitignore to separate files for git commands
+
+used CDN of fishpond to upload,resize,encode and save cover 
+used the link and script in html for CDN
+link javascript from public into HTML
+save cover inside database by converting it to JSON
+
+created virtual element inside book to grab the JSON 
+and covert back to image for HTML for views
+
+create show by id page 
+- copy and paste new page for show
+- copy the route of
+
+create edit by id page
+- copy the /new route
+method override as PUT for edit
+
+create delete by id page as partial
+created a deleteForm in partial
+link into views as needed
+
+show edit delete for Books/others
+use Author route and views as templates
+
+
