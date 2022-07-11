@@ -5,7 +5,8 @@ const router = require("express").Router();
 const User = require("../models/User")
 
 // setup route middlewares
-var csrfProtection = csrf({ cookie: { maxAge: 3000, httpOnly: true, secure: true, proxy: true}})
+var csrfProtection = csrf({ cookie: { maxAge: 3000, httpOnly: true }})
+// var csrfProtection = csrf({ cookie: { maxAge: 3000, httpOnly: true, secure: true, proxy: true}})
 var parseForm = bodyParser.urlencoded({ extended: false })
 
 const { userRegister, userLogin } = require('../utils/Auth');
