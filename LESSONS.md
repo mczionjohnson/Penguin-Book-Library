@@ -485,11 +485,16 @@ replace token with empty string
 set maxxAge to 1 millisecond
 
 # check user
-populated for header2 
-res.locals.logger
+populated data from middleware for header2 and header3
+res.locals.logger to make it available for views
 
-to be used
             <li>Welcome, <%= logged.email %> </li>
+
+# favicon
+<link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+since 
+app.use(express.static('public'))
+
 
 
 ### general updates

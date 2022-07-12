@@ -10,6 +10,7 @@ const expressLayouts = require('express-ejs-layouts')
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 
+
 const app = express()
 // const passport = require("passport")
 
@@ -24,6 +25,7 @@ app.set('views', __dirname + '/views' )
 app.set('layout', 'layouts/layout')
 
 
+
 app.use(cors());
 app.use(expressLayouts)
 app.use(express.static('public'))
@@ -33,8 +35,6 @@ app.use(methodOverride('_method'))
 app.use(bodyParser.urlencoded({ limit: '10mb', extended: true}))
 // extended: true to allow json object and strings
 
-// app.use(passport.initialize())
-// require('./middlewares/passport')(passport)
 
 // connecting to mongodb
 const mongoose = require('mongoose')
