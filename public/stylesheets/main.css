@@ -3,6 +3,7 @@
 @import 'shared/header.css';
 @import 'shared/buttons.css';
 /* variable comes first because other file depends on the data */
+@import 'shared/form.css';
 
 :root {
     font-family: 'Gotham Rounded';
