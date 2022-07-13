@@ -2,11 +2,12 @@
 
 <h2 class="page-header"> <%= author.name %> </h2>
 <!-- author is a data/var provided from route -->
-<a href="/authors/<%= author.id %>/edit">Edit</a>
+<div class="btn-row">
+<a class="btn btn-primary" href="/authors/<%= author.id %>/edit">Edit</a>
 
 <!-- inluding a partial -->
 <%- include('../partials/deleteForm', {url : `/authors/${author.id}` }) %>
-
+</div>
 <% if (booksByAuthor.length > 0) { %>
     <h2>Books By Author</h2>
     <div>
