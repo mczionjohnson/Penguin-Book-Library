@@ -1,15 +1,6 @@
 const express= require('express')
-// const multer = require('multer')
+
 const router = express.Router()
-// const path = require('path')
-// const fs = require('fs')
-
-// for users and admin view
-const { requireAuth, checkUser } = require('../middlewares/authMiddleware');
-
-// for admin features only
-const { requireAuthAdmin } = require('../middlewares/authMiddleware2');
-
 
 // import the Author and Book Tables and allow it as an object
 const Author = require('../models/authors')
@@ -25,15 +16,8 @@ const imageMimeTypes = ['image/jpeg', 'image/png', 'image/gif']
 //     }
 // })
 
-// user this middleware for all get requests
-router.get('*', checkUser)
-router.post('*', checkUser)
-router.put('*', checkUser)
-
-
-
 // All Books
-router.get('/', requireAuthAdmin, async (req, res) => {
+router.get('/', async (req, res) => {
     // res.send('All book')
     // preparing an array of book model to be used by view
     let query = Book.find()
@@ -60,45 +44,17 @@ router.get('/', requireAuthAdmin, async (req, res) => {
     }
 }) 
 
-// test
-router.get('/byuser', requireAuth, async (req, res) => {
-    // res.send('All book')
-    // preparing an array of book model to be used by view
-    let query = Book.find()
-    if (req.query.title != null && req.query.title != '') {
-        query = query.regex('title', new RegExp(req.query.title, 'i'))
-    }
-    if (req.query.publishedBefore != null && req.query.publishedBefore != '') {
-        query = query.lte('publishDate', req.query.publishedBefore )
-    }
-    if (req.query.publishedAfter != null && req.query.publishedAfter != '') {
-        query = query.gte('publishDate', req.query.publishedAfter )
-    }
-    try {
-        const books = await query.exec()
-        const params = {
-            books: books,
-            searchOptions: req.query
-        } 
-        res.render('booksUser/index', params)
-        // preparing a loop in Book to be used by the views
-        // creating books and searchOIptions to used as locals/var by the views
-    } catch {
-        res.redirect('/')
-    }
-}) 
-
 
 // New Book route
 // pass in the var created at try or catch block after the path
-router.get('/new', requireAuthAdmin, async (req, res) => {
+router.get('/new', async (req, res) => {
     // res.send('New book')
     // res.render('books/new')
     renderNewPage(res, new Book())
 })
 
 // Create new book
-router.post('/', requireAuthAdmin, async (req, res) => {
+router.post('/', async (req, res) => {
     // const fileName = req.file != null ? req.file.filename : null
     // res.send('Create book')
     const book = new Book({
@@ -126,7 +82,7 @@ router.post('/', requireAuthAdmin, async (req, res) => {
 })
 
 // Show Book Route
-router.get('/:id', requireAuthAdmin, async (req, res) => {
+router.get('/:id', async (req, res) => {
     try {
         const book = await Book.findById(req.params.id).populate('author').exec()
         res.render('books/show', { book: book })
@@ -135,18 +91,9 @@ router.get('/:id', requireAuthAdmin, async (req, res) => {
     }
 })
 
-// test
-router.get('/user/:id', requireAuth, async (req, res) => {
-    try {
-        const book = await Book.findById(req.params.id).populate('author').exec()
-        res.render('booksUser/show', { book: book })
-    } catch {
-        res.redirect('/')
-    }
-})
 
 // Edit Book Route
-router.get('/:id/edit', requireAuthAdmin, async (req, res) => {
+router.get('/:id/edit', async (req, res) => {
     const book = await Book.findById(req.params.id)
     try {
         renderEditPage(res, book)
@@ -156,7 +103,7 @@ router.get('/:id/edit', requireAuthAdmin, async (req, res) => {
 })
 
 // Update book
-router.put('/:id', requireAuthAdmin, async (req, res) => {
+router.put('/:id', async (req, res) => {
     let book
     try{
         book = await Book.findById(req.params.id)
@@ -181,7 +128,7 @@ router.put('/:id', requireAuthAdmin, async (req, res) => {
 })
 
 // Delete Route
-router.delete('/:id', requireAuthAdmin, async (req, res) => {
+router.delete('/:id', async (req, res) => {
     let book
     try {
         book = await Book.findById(req.params.id)

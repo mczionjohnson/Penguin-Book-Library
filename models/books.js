@@ -51,14 +51,5 @@ bookSchema.virtual('coverImagePath').get(function() {
     }
 })
 
-// bookSchema.virtual('coverImagePath').get(function() {
-//     if (this.coverImageName != null) {
-//         return path.join('/', coverImageBasePath, this.coverImageName)
-//         // the index path, the folders and the name of this file
-//     }
-// })
-
 module.exports = mongoose.model ('Book', bookSchema)
 
-// exporting the path as a var and not as a default
-// module.exports.coverImageBasePath = coverImageBasePath

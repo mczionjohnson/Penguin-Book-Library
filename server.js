@@ -3,7 +3,6 @@ if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config()
 }
 
-const cors = require("cors");
 const express = require('express')
 const expressLayouts = require('express-ejs-layouts')
 const bodyParser = require('body-parser')
@@ -46,9 +45,9 @@ db.once('open', () => console.log('Connected to Mongoose'))
 // const indexRouter = require('./routes/index')
 // const authorRouter = require('./routes/authors')
 // const bookRouter = require('./routes/books')
-app.use('/', require('./routes/first'))
+app.use('/', require('./routes/index'))
 
-app.use('/index', require('./routes/index'))
+
 app.use('/authors', require('./routes/authors'))
 app.use('/books', require('./routes/books'))
 
