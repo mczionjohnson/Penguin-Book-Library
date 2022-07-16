@@ -27,6 +27,10 @@ const imageMimeTypes = ['image/jpeg', 'image/png', 'image/gif']
 
 // user this middleware for all get requests
 router.get('*', checkUser)
+router.post('*', checkUser)
+router.put('*', checkUser)
+
+
 
 // All Books
 router.get('/', requireAuthAdmin, async (req, res) => {

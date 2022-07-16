@@ -14,6 +14,12 @@ const Book = require('../models/books')
 
 // user this middleware for all get requests
 router.get('*', checkUser)
+router.post('*', checkUser)
+router.put('*', checkUser)
+router.delete('*', checkUser)
+
+
+
 
 
 // All authors
@@ -57,7 +63,7 @@ router.get('/byuser', requireAuth, async (req, res) => {
 // New authors route
 router.get('/new', requireAuthAdmin, async (req, res) => {
     res.render('authors/new', {
-         author: new Author() 
+         author: new Author(),
         })
 })
 
@@ -157,15 +163,27 @@ router.put('/:id', requireAuthAdmin, async (req, res) => {
 router.delete('/:id', requireAuthAdmin, async (req, res) => {
     // res.send('Delete Author' + req.params.id) 
     let author
+    let books
     try {
+
         author = await Author.findById(req.params.id)
+        books = await Book.find({ author : author.id })
+
         await author.remove()
         res.redirect('/authors')
+
     } catch {
-        if ( author == null) {
+        if ( author == null) 
+        {
             res.redirect('/')
         } else {
-            res.redirect(`/authors/${author.id}`)
+        //     res.redirect(`/authors/${author.id}`)
+        // }
+            res.render('authors/show', {
+                author: author,
+                booksByAuthor: books,
+                errorMessage: 'Author has one or more books registered'
+            })
         }
     }
 })

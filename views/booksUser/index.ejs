@@ -17,12 +17,8 @@
     <button type="submit">Search</button>
 </form>
 <div>
-    <% books.forEach(book => { %>
-        <a href="/books/user/<%= book.id %>">
-            <img height="150" width="100" src="<%= book.coverImagePath %>">
-        </a>
-        <!--book.coverImagePath is a virtual path from the model  -->
-    <% }) %>
+    <%- include('../partials/bookGridUser', {books : books, large: true}) %>
+
 </div>
 <!-- to run this code on the server -->
 <!-- fetch all element from book table -->

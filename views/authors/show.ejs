@@ -13,12 +13,8 @@
 <% if (booksByAuthor.length > 0) { %>
     <h2 class="page-header">Books By Author</h2>
     <div>
-        <% booksByAuthor.forEach(book => { %>
-            <a href="/books/<%= book.id %>">
-                <img height="150" width="100" src="<%= book.coverImagePath %>">
-                <!--book.coverImagePath is a virtual path from the model  -->
-            </a>
-        <% }) %>
+        <%- include('../partials/bookGrid', {books : booksByAuthor}) %>
+
     </div>
 <% } %>  
 <!-- bookByAuthor is a (looped) data/var provided from route/controller -->

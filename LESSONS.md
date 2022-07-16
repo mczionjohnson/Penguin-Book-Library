@@ -495,7 +495,23 @@ res.locals.logger to make it available for views
 since 
 app.use(express.static('public'))
 
+# use opf partials for book-grid
+- former
+    <!-- <% booksByAuthor.forEach(book => { %>
+        <a href="/books/<%= book.id %>">
+            <img height="150" width="100" src="<%= book.coverImagePath %>">
+            <!--book.coverImagePath is a virtual path from the model  -->
+        </a>
+    <% }) %> -->
 
+- newest
+<div class="book-grid <%= bookGridClass %>">
+    <% books.forEach(book => { %>
+        <a href="/books/<%= book.id %>">
+            <img class="book-cover <%= bookCoverClass %>" src="<%= book.coverImagePath %>">
+        </a>
+    <% }) %>
+</div>
 
 ### general updates
 
@@ -507,3 +523,35 @@ git push <new repo name>
 git reset HEAD~1
 git checkout 
 git checkout -b <new branch name>
+
+# populating data for error handling
+added router.post('*', checkUser) to author and books page 
+to populate data for error handling scenarios
+
+# updated error handling in author
+ else {
+    res.render('authors/show', {
+    author: author,
+    booksByAuthor: books,
+    errorMessage: 'Author has one or more books registered'
+}
+
+# updating book upload
+- former javascript
+        FilePond.setOptions({
+            stylePanelAspectRatio: 150 / 100,
+            imageResizeTargetWidth: 100,
+            imageResizeTargetHeight: 150
+        })
+
+- new javascript
+const rootStyles = window.getComputedStyle(document.documentElement)
+<!-- getting atyles before running javascript -->
+
+if (rootStyles.getPropertyValue('--book-cover-width-large') !=null && rootStyles.getPropertyValue('--book-cover-width-large') !== '') {
+    ready()
+} else {
+    document.getElementById('main.css').addEventListener('load', ready)
+    <!-- EventListener to check the load of main.css -->
+}
+<!-- we added the id to the layout page where we linked the main.css -->
