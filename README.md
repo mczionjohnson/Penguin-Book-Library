@@ -1,12 +1,9 @@
 ### Small scale Library/Store
 
-Add csfr for forms
+A fullstack development with NODEJS building a book library.
 
-Make add/edit/post routes private for admin/user/super-user or hide specific buttons eg delete edit
+Handles MVC with MONGODB, EJS and Express 
 
-Disable submit button with javascript in html
+using enviroment variables if not production
 
-Only admin/super-admin can post books from mail request in email
-After verification of submitted details
-
-Only view for client, contact Admin for checkout, else cart and checkout page required
+use favicon
