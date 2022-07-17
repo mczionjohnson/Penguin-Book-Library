@@ -2,15 +2,29 @@
 
 <h2 class="page-header">Search Author</h2>
 <form action="/authors/byuser" method="GET">
-    <label>Name</label>
-    <input type="text" name="name" value="<%= searchOptions.name %>">
-    <button type="submit">Search</button>
+
+    <div class="form-row">
+        <div class="form-item">
+            <label>Name</label>
+            <input type="text" name="name" value="<%= searchOptions.name %>">
+        </div>
+    </div>
+
+    <div class="form-row form-row-end">
+        <button class="btn btn-primary" type="submit">Search</button>
+    </div>
+
 </form>
 <br>
 <% authors.forEach(author => { %>
-    <div><%= author.name %></div>
-    <a class="btn btn-primary" href="/authors/user/<%= author.id %>">View</a>
-
+    <div class="author-row">
+        <div class="author-name"><%= author.name %></div>
+    
+        <div class="btn-row">
+            <a class="btn btn-primary" href="/authors/user/<%= author.id %>">View</a>
+        </div>
+    </div>
+    
 <% }) %>
 <!-- to run this code on the server -->
 <!-- fetch all element from authors table -->

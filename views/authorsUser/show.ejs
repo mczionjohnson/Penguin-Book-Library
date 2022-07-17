@@ -3,9 +3,8 @@
 <h2 class="page-header"> <%= author.name %> </h2>
 <!-- author is a data/var provided from route -->
 
-
 <% if (booksByAuthor.length > 0) { %>
-    <h2>Books By Author</h2>
+    <h2 class="page-header">Books By Author</h2>
     <div>
         <%- include('../partials/bookGridUser', {books : booksByAuthor}) %>
 

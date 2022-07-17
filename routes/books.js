@@ -29,7 +29,7 @@ const imageMimeTypes = ['image/jpeg', 'image/png', 'image/gif']
 router.get('*', checkUser)
 router.post('*', checkUser)
 router.put('*', checkUser)
-
+router.delete('*', checkUser)
 
 
 // All Books
