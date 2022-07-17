@@ -7,6 +7,10 @@
 .book-cover {
     width: var(--book-cover-width);
     height: calc(var(--book-cover-width) / var(--book-aspect-ratio)); 
+    /* margin: 0rem 1rem; */
+}
+
+.book-cover-user {
     margin: 0rem 1rem;
 }
 
@@ -55,6 +59,9 @@
         "author author";
     grid-gap: .5rem;
     margin-top: .5rem;
+    /* margin-left: 1rem; */
+}
+.user-btn-grid{
     margin-left: 1rem;
 }
 
