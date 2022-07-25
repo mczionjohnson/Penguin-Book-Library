@@ -167,23 +167,22 @@ router.delete('/:id', requireAuthAdmin, async (req, res) => {
     try {
 
         author = await Author.findById(req.params.id)
-        books = await Book.find({ author : author.id })
-
-        await author.remove()
-        res.redirect('/authors')
-
+        books = await Book.find({ author : author })
+        if (books == '') {
+            await author.remove()
+            res.redirect('/authors')
+        } else {
+            // console.log(`${books}` )   
+            res.render('authors/show', {
+            author: author,
+            booksByAuthor: books,
+            errorMessage: 'Author has one or more books registered'
+            })
+        }
     } catch {
         if ( author == null) 
         {
             res.redirect('/')
-        } else {
-        //     res.redirect(`/authors/${author.id}`)
-        // }
-            res.render('authors/show', {
-                author: author,
-                booksByAuthor: books,
-                errorMessage: 'Author has one or more books registered'
-            })
         }
     }
 })
