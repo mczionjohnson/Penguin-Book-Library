@@ -38,9 +38,12 @@ app.use(bodyParser.urlencoded({ limit: '10mb', extended: true}))
 
 // connecting to mongodb
 const mongoose = require('mongoose')
+mongoose.set('strictQuery', false)
 mongoose.connect(process.env.MONGODB_URL, {
     useNewUrlParser: true, useUnifiedTopology: true})
     // useUnifiedTopology: true
+
+
 
 
 
