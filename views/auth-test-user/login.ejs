@@ -4,6 +4,8 @@
 <form action="/api/users/login" method="POST">
     <%- include('_form_fields_login') %>
     
-    <a href="/">Cancel</a>
-    <button type="submit">Login</button>
+    <!-- <a href="/" class="btn btn-danger" >Cancel</a>
+    <button type="submit" class="btn btn-primary">Login</button> -->
+
+    <%- include('../partials/_cancel_login') %>
 </form>
