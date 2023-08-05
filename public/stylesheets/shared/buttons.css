@@ -54,7 +54,8 @@
 
 .btn-danger {
     color: var(--color-btn-danger-text);
-    background-color: var(--color-btn-danger-background);
+    background-color: hsl(0, 100%, 40%);
+    /* background-color: var(--color-btn-danger-background); */
 }
 
 .btn-danger:hover {
